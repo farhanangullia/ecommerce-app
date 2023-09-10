@@ -21,7 +21,6 @@ def configure_health_checks(app: FastAPI) -> None:
     def get_health():
         return response_success(message="Health OK")
 
-
 def init(db_uri: str):
     engine = create_engine(db_uri, echo=True)
     with Session(engine) as session:
@@ -35,25 +34,25 @@ def init(db_uri: str):
                 name="Gameboy",
                 description="This device is a great piece of nintendo nostalgia for gamers",
                 price=50,
-                image="",
+                image="https://s6.imgcdn.dev/Ockqq.jpg",
             )
             p2 = pgsql_model.Product(
                 name="Switch",
                 description="Enjoy a flexible gaming experience on this powerful, versatile console.",
                 price=200,
-                image="",
+                image="https://s6.imgcdn.dev/Ocy0u.jpg",
             )
             p3 = pgsql_model.Product(
                 name="Xbox Series X",
                 description="The fastest, most powerful Xbox ever.",
                 price=729,
-                image="",
+                image="https://s6.imgcdn.dev/Ocs4B.jpg",
             )
             p4 = pgsql_model.Product(
                 name="Playstation 5",
                 description="Marvel at incredible graphics and experience new PS5 features.",
                 price=850,
-                image="",
+                image="https://s6.imgcdn.dev/OcivN.jpg",
             )
             session.add_all([p1, p2, p3, p4])
             session.commit()
