@@ -9,11 +9,14 @@ import (
 
 // Endpoints holds all Go kit endpoints
 type Endpoints struct {
+	ServiceStatusRequest endpoint.Endpoint
 }
 
 // MakeServerEndpoints initializes all Go kit endpoints
 func MakeServerEndpoints(s shipping.Service) Endpoints {
-	return Endpoints{}
+	return Endpoints{
+		ServiceStatusRequest: makeServiceStatusRequestEndpoint(s),
+	}
 }
 
 func makeServiceStatusRequestEndpoint(s shipping.Service) endpoint.Endpoint {
