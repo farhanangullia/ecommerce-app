@@ -21,6 +21,7 @@ def configure_health_checks(app: FastAPI) -> None:
     def get_health():
         return response_success(message="Health OK")
 
+
 def init(db_uri: str):
     engine = create_engine(db_uri, echo=True)
     with Session(engine) as session:

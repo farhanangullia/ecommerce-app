@@ -3,6 +3,7 @@ import os
 from uuid import UUID
 
 import uvicorn
+from app.adapters.grpc_repository import GrpcShippingRepository
 from app.adapters.http_repository import HttpCartRepository, HttpProductRepository
 from app.adapters.pgsql_repository import PgsqlOrderRepository
 from app.domain.services.checkout import CartIsEmptyException, CheckoutService
@@ -28,6 +29,7 @@ configure_health_checks(app)
 DB_URI = os.getenv("DB_URI")
 CART_SERVICE_URL = os.getenv("CART_SERVICE_URL")
 PRODUCT_SERVICE_URL = os.getenv("PRODUCT_SERVICE_URL")
+SHIPPING_SERVICE_URL = os.getenv("SHIPPING_SERVICE_URL")
 
 engine = init(db_uri=DB_URI)
 
@@ -37,10 +39,12 @@ def make_checkout_controller() -> CheckoutService:
     order_repository = PgsqlOrderRepository(engine=engine)
     cart_repository = HttpCartRepository(service_url=CART_SERVICE_URL)
     product_repository = HttpProductRepository(service_url=PRODUCT_SERVICE_URL)
+    shipping_repository = GrpcShippingRepository(service_url=SHIPPING_SERVICE_URL)
     return CheckoutService(
         order_repository=order_repository,
         cart_repository=cart_repository,
         product_repository=product_repository,
+        shipping_repository=shipping_repository,
     )
 
 
@@ -51,6 +55,7 @@ def make_order_controller() -> OrderService:
 
 @app.post("/checkout")
 def checkout(
+    checkout_request: CheckoutRequest,
     x_session_id: str = Header(None),
     controller: CheckoutService = Depends(make_checkout_controller),
 ):
@@ -59,13 +64,23 @@ def checkout(
         if not x_session_id:
             return response_bad_request()
 
-        order = controller.place_order(customer_id=x_session_id)
+        # request_body = checkout_request.dict()
+
+        logger.info(f"request_body: {checkout_request}")
+
+        order, tracking_id = controller.place_order(
+            customer_id=x_session_id,
+            address=checkout_request.shipping_details.address,
+            country=checkout_request.shipping_details.country,
+        )
         logger.info(f"controller order: {order}")
+        logger.info(f"controller tracking_id: {tracking_id}")
 
         response = CheckoutResponse(
             order_id=str(order.id),
             created_on=order.created_on,
             total_amount=order.total_amount,
+            shipping_tracking_id=tracking_id,
         )
         logger.info(response)
 
