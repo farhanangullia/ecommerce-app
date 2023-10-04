@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/farhanangullia/ecommerce-app/shipping-service/internal/app/shipping/common"
 	"github.com/google/uuid"
+	"strings"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -81,8 +82,7 @@ func (s *service) ServiceStatus(ctx context.Context) error {
 
 func (s *service) CreateShipping(ctx context.Context, shippingOrderRequest ShippingOrderRequest) (string, error) {
 	dateCreated := time.Now()
-	trackingId := uuid.New().String()
-
+	trackingId := strings.Split(strings.ToUpper(uuid.New().String()), "-")[0]
 	err := common.ValidateStruct(*validate, shippingOrderRequest)
 	if err != nil {
 		return "", err
