@@ -1,0 +1,10 @@
+{
+  "SERVICE_NAME": "shipping-service",
+  "HTTP_PORT": 9200,
+  "GRPC_PORT": 8082,
+  "DB_HOST": "ecommerce-postgres",
+  "DB_PORT": "5432",
+  "DB_USER": "postgres",
+  "DB_NAME": "postgres",
+  "DB_PASSWORD": "postgres"
+}

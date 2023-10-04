@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option go_package = "github.com/farhanangullia/ecommerce-app/shipping-service/pb";
+
+service ShippingService {
+  rpc ServiceStatus (ServiceStatusRequest) returns (ServiceStatusReply) {}
+  rpc ShippingOrder (ShippingOrderRequest) returns (ShippingOrderReply) {}
+  rpc FindShipping (FindShippingRequest) returns (FindShippingReply) {}
+  rpc GetAllShipping (GetAllShippingRequest) returns (GetAllShippingReply) {}
+}
+
+message ServiceStatusRequest {}
+
+message ServiceStatusReply {
+  optional string err = 1;
+}
+
+message ShippingOrderRequest {
+  string address = 1;
+  string country = 2;
+  float total_amount = 3;
+  string order_id = 4;
+
+}
+
+message ShippingOrderReply {
+  optional string err = 1;
+  optional string tracking_id = 2;
+}
+
+message ShippingOrder {
+  string address = 1;
+  string country = 2;
+  float total_amount = 3;
+  string order_id = 4;
+  string date_created = 5;
+  string status = 6;
+}
+
+message FindShippingRequest {
+  string tracking_id = 1;
+}
+
+message FindShippingReply {
+  optional string err = 1;
+  optional ShippingOrder shipping_order = 2;
+
+}
+
+message GetAllShippingRequest {}
+
+message GetAllShippingReply {
+  optional string err = 1;
+  repeated ShippingOrder shipping_orders = 2;
+}
