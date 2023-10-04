@@ -36,3 +36,11 @@ class ProductRepository(ABC):
     @abstractmethod
     def get_product(self, id: str) -> Optional[Product]:
         ...
+
+
+class ShippingRepository(ABC):
+    @abstractmethod
+    def create_shipping(
+        self, address: str, country: str, total_amount: float, order_id: str
+    ) -> str:
+        ...
