@@ -162,3 +162,4 @@ temp
 .DS_store
 
 .idea
+.ruff_cache
