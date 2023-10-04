@@ -15,25 +15,25 @@ class ShippingServiceStub(object):
             channel: A grpc.Channel.
         """
         self.ServiceStatus = channel.unary_unary(
-                '/ShippingService/ServiceStatus',
-                request_serializer=shipping__pb2.ServiceStatusRequest.SerializeToString,
-                response_deserializer=shipping__pb2.ServiceStatusReply.FromString,
-                )
+            "/ShippingService/ServiceStatus",
+            request_serializer=shipping__pb2.ServiceStatusRequest.SerializeToString,
+            response_deserializer=shipping__pb2.ServiceStatusReply.FromString,
+        )
         self.ShippingOrder = channel.unary_unary(
-                '/ShippingService/ShippingOrder',
-                request_serializer=shipping__pb2.ShippingOrderRequest.SerializeToString,
-                response_deserializer=shipping__pb2.ShippingOrderReply.FromString,
-                )
+            "/ShippingService/ShippingOrder",
+            request_serializer=shipping__pb2.ShippingOrderRequest.SerializeToString,
+            response_deserializer=shipping__pb2.ShippingOrderReply.FromString,
+        )
         self.FindShipping = channel.unary_unary(
-                '/ShippingService/FindShipping',
-                request_serializer=shipping__pb2.FindShippingRequest.SerializeToString,
-                response_deserializer=shipping__pb2.FindShippingReply.FromString,
-                )
+            "/ShippingService/FindShipping",
+            request_serializer=shipping__pb2.FindShippingRequest.SerializeToString,
+            response_deserializer=shipping__pb2.FindShippingReply.FromString,
+        )
         self.GetAllShipping = channel.unary_unary(
-                '/ShippingService/GetAllShipping',
-                request_serializer=shipping__pb2.GetAllShippingRequest.SerializeToString,
-                response_deserializer=shipping__pb2.GetAllShippingReply.FromString,
-                )
+            "/ShippingService/GetAllShipping",
+            request_serializer=shipping__pb2.GetAllShippingRequest.SerializeToString,
+            response_deserializer=shipping__pb2.GetAllShippingReply.FromString,
+        )
 
 
 class ShippingServiceServicer(object):
@@ -42,124 +42,173 @@ class ShippingServiceServicer(object):
     def ServiceStatus(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def ShippingOrder(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def FindShipping(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetAllShipping(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_ShippingServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'ServiceStatus': grpc.unary_unary_rpc_method_handler(
-                    servicer.ServiceStatus,
-                    request_deserializer=shipping__pb2.ServiceStatusRequest.FromString,
-                    response_serializer=shipping__pb2.ServiceStatusReply.SerializeToString,
-            ),
-            'ShippingOrder': grpc.unary_unary_rpc_method_handler(
-                    servicer.ShippingOrder,
-                    request_deserializer=shipping__pb2.ShippingOrderRequest.FromString,
-                    response_serializer=shipping__pb2.ShippingOrderReply.SerializeToString,
-            ),
-            'FindShipping': grpc.unary_unary_rpc_method_handler(
-                    servicer.FindShipping,
-                    request_deserializer=shipping__pb2.FindShippingRequest.FromString,
-                    response_serializer=shipping__pb2.FindShippingReply.SerializeToString,
-            ),
-            'GetAllShipping': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAllShipping,
-                    request_deserializer=shipping__pb2.GetAllShippingRequest.FromString,
-                    response_serializer=shipping__pb2.GetAllShippingReply.SerializeToString,
-            ),
+        "ServiceStatus": grpc.unary_unary_rpc_method_handler(
+            servicer.ServiceStatus,
+            request_deserializer=shipping__pb2.ServiceStatusRequest.FromString,
+            response_serializer=shipping__pb2.ServiceStatusReply.SerializeToString,
+        ),
+        "ShippingOrder": grpc.unary_unary_rpc_method_handler(
+            servicer.ShippingOrder,
+            request_deserializer=shipping__pb2.ShippingOrderRequest.FromString,
+            response_serializer=shipping__pb2.ShippingOrderReply.SerializeToString,
+        ),
+        "FindShipping": grpc.unary_unary_rpc_method_handler(
+            servicer.FindShipping,
+            request_deserializer=shipping__pb2.FindShippingRequest.FromString,
+            response_serializer=shipping__pb2.FindShippingReply.SerializeToString,
+        ),
+        "GetAllShipping": grpc.unary_unary_rpc_method_handler(
+            servicer.GetAllShipping,
+            request_deserializer=shipping__pb2.GetAllShippingRequest.FromString,
+            response_serializer=shipping__pb2.GetAllShippingReply.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'ShippingService', rpc_method_handlers)
+        "ShippingService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class ShippingService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def ServiceStatus(request,
+    def ServiceStatus(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ShippingService/ServiceStatus',
+            "/ShippingService/ServiceStatus",
             shipping__pb2.ServiceStatusRequest.SerializeToString,
             shipping__pb2.ServiceStatusReply.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def ShippingOrder(request,
+    def ShippingOrder(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ShippingService/ShippingOrder',
+            "/ShippingService/ShippingOrder",
             shipping__pb2.ShippingOrderRequest.SerializeToString,
             shipping__pb2.ShippingOrderReply.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def FindShipping(request,
+    def FindShipping(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ShippingService/FindShipping',
+            "/ShippingService/FindShipping",
             shipping__pb2.FindShippingRequest.SerializeToString,
             shipping__pb2.FindShippingReply.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetAllShipping(request,
+    def GetAllShipping(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ShippingService/GetAllShipping',
+            "/ShippingService/GetAllShipping",
             shipping__pb2.GetAllShippingRequest.SerializeToString,
             shipping__pb2.GetAllShippingReply.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

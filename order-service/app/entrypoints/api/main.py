@@ -65,10 +65,14 @@ def checkout(
             return response_bad_request()
 
         # request_body = checkout_request.dict()
-        
+
         logger.info(f"request_body: {checkout_request}")
 
-        order, tracking_id = controller.place_order(customer_id=x_session_id, address=checkout_request.shipping_details.address, country=checkout_request.shipping_details.country)
+        order, tracking_id = controller.place_order(
+            customer_id=x_session_id,
+            address=checkout_request.shipping_details.address,
+            country=checkout_request.shipping_details.country,
+        )
         logger.info(f"controller order: {order}")
         logger.info(f"controller tracking_id: {tracking_id}")
 
@@ -76,7 +80,7 @@ def checkout(
             order_id=str(order.id),
             created_on=order.created_on,
             total_amount=order.total_amount,
-            shipping_tracking_id=tracking_id
+            shipping_tracking_id=tracking_id,
         )
         logger.info(response)
 

@@ -1,12 +1,13 @@
-
 import grpc
 from app.domain.ports.repository import ShippingRepository
 from app.pb import shipping_pb2, shipping_pb2_grpc
+
 
 class ShippingException(Exception):
     def __init__(self, message="Error occured during shipping order creation"):
         self.message = message
         super().__init__(self.message)
+
 
 class GrpcShippingRepository(ShippingRepository):
     def __init__(self, service_url: str) -> None:

@@ -9,8 +9,10 @@ class ShippingDetails(BaseModel):
     address: str = Field(min_length=1)
     country: str = Field(min_length=1)
 
+
 class CheckoutRequest(BaseModel):
-    shipping_details: ShippingDetails  = Field(alias="shippingDetails")
+    shipping_details: ShippingDetails = Field(alias="shippingDetails")
+
 
 class CheckoutResponse(BaseModel):
     order_id: str
