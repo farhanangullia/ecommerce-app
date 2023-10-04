@@ -3,8 +3,8 @@ package transport
 import (
 	"context"
 	"encoding/json"
+	"github.com/farhanangullia/ecommerce-app/shipping-service/internal/app/shipping/endpoints"
 	"net/http"
-	"shipping-service/internal/app/shipping/endpoints"
 
 	kittransport "github.com/go-kit/kit/transport"
 	kithttp "github.com/go-kit/kit/transport/http"
@@ -22,8 +22,8 @@ func NewHTTPHandler(ep endpoints.Endpoints, logger kitlog.Logger) http.Handler {
 
 	// Configure routes with Gorilla Mux package
 	r.Methods("GET").Name("HealthCheck").Path("/healthz").Handler(kithttp.NewServer(
-		ep.ServiceStatusRequest,
-		decodeServiceStatusRequest,
+		ep.ServiceStatus,
+		decodeServiceStatus,
 		encodeResponse,
 		options...,
 	))
@@ -31,7 +31,7 @@ func NewHTTPHandler(ep endpoints.Endpoints, logger kitlog.Logger) http.Handler {
 	return r
 }
 
-func decodeServiceStatusRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+func decodeServiceStatus(_ context.Context, r *http.Request) (request interface{}, err error) {
 	var req endpoints.ServiceStatusRequest
 	if r.ContentLength == 0 {
 		return req, nil
@@ -51,10 +51,6 @@ type Errorer interface {
 	Error() error
 }
 
-// encodeResponse is the common method to encode all response types to the
-// client. I chose to do it this way because, since we're using JSON, there's no
-// reason to provide anything more specific. It's certainly possible to
-// specialize on a per-response (per-method) basis.
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	if e, ok := response.(Errorer); ok && e.Error() != nil { // Not a Go kit transport error, but a business-logic error.
 		// Provide those as HTTP errors.
